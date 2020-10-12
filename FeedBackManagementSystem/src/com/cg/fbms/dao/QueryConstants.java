@@ -13,7 +13,7 @@ public interface QueryConstants {
 	
 
 	//queries for participant
-	final String GET_PARTICIPANT_ENROLLMENT_LIST = "SELECT tParticipantEnroll FROM TrainingParticipantEnrollment  WHERE tParticipantEnroll.id.participantId=?";
+	final String GET_PARTICIPANT_ENROLLMENT_LIST = "SELECT tParticipantEnroll FROM TrainingParticipantEnrollment  WHERE tParticipantEnroll.trainingParticipantId.participantId=?";
 	
 	
 	//for feedback master

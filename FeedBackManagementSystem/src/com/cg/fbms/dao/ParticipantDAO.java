@@ -16,16 +16,15 @@ import com.cg.fbms.service.IParticipantService;
 import com.cg.fbms.service.ParticipantService;
 import com.cg.fbms.utility.JPAUtility;
 
-public class ParticipantDAO implements IParticipantDAO{
+public class ParticipantDAO implements IParticipantDAO,QueryConstants{
 	
 	public static List<TrainingParticipantEnrollment> getParticipantEnrollemntList(int participantId,EntityManager manager){
 	
-		String selectQuery = "select t from TrainingParticipantEnrollment t where t.id.participantId=?";
-		TypedQuery<TrainingParticipantEnrollment> query = manager.createQuery(selectQuery,TrainingParticipantEnrollment.class);
+		TypedQuery<TrainingParticipantEnrollment> query = manager.createQuery(GET_PARTICIPANT_ENROLLMENT_LIST,TrainingParticipantEnrollment.class);
 		query.setParameter(1, participantId);
 		
-		List<TrainingParticipantEnrollment> list = query.getResultList();
-		return list;
+		List<TrainingParticipantEnrollment> trainingEnrollmentlist = query.getResultList();
+		return trainingEnrollmentlist;
 	}
 	
 	@Override
@@ -39,10 +38,10 @@ public class ParticipantDAO implements IParticipantDAO{
 		manager = factory.createEntityManager();
 		System.out.println(participantId);
 		
-		List<TrainingParticipantEnrollment> list = ParticipantDAO.getParticipantEnrollemntList(participantId,manager);
-		for(TrainingParticipantEnrollment program :list)
+		List<TrainingParticipantEnrollment> trainingEnrollmentlist = ParticipantDAO.getParticipantEnrollemntList(participantId,manager);
+		for(TrainingParticipantEnrollment program :trainingEnrollmentlist)
 		{
-			TrainingProgram getProgram = manager.find(TrainingProgram.class,program.getId().getTrainingCode());
+			TrainingProgram getProgram = manager.find(TrainingProgram.class,program.getTrainingParticipantId().getTrainingCode());
 			listProgram.add(getProgram);
 		}
 		return listProgram;
@@ -52,10 +51,10 @@ public class ParticipantDAO implements IParticipantDAO{
 	@Override
 	public boolean provideFeedback(FeedbackMaster participantFeedback ) {
 		// TODO Auto-generated method stub
-		
+		boolean flag = false;
 		
 		if(participantFeedback.getFbClarifyDoubts()==0 || participantFeedback.getFbCommunicationSkill()==0) {
-			return false;
+			return flag;
 		}
 		 
 		EntityManagerFactory factory = null;
@@ -70,12 +69,13 @@ public class ParticipantDAO implements IParticipantDAO{
 		try {
 			manager.persist(participantFeedback);
 			transaction.commit();
-			return true;
+			flag = true;
+			return flag;
 		} 
 		catch (PersistenceException e) {
 			transaction.rollback();
 			System.out.println(e.getMessage());
-			return false;
+			return flag;
 		} 
 		finally {
 			manager.close();
@@ -92,12 +92,12 @@ public class ParticipantDAO implements IParticipantDAO{
 		factory = JPAUtility.getFactory();
 		manager = factory.createEntityManager();
 		
-		List<TrainingParticipantEnrollment> list = ParticipantDAO.getParticipantEnrollemntList(participantId,manager);
+		List<TrainingParticipantEnrollment> trainingEnrollmentlist = ParticipantDAO.getParticipantEnrollemntList(participantId,manager);
 		
-		for(TrainingParticipantEnrollment program :list)
+		for(TrainingParticipantEnrollment program :trainingEnrollmentlist)
 		{
-			System.out.println(program.getId().getParticipantId()+" "+program.getId().getTrainingCode());
-			FeedbackMaster getProvidedFeedback = manager.find(FeedbackMaster.class,program.getId());
+			System.out.println(program.getTrainingParticipantId().getParticipantId()+" "+program.getTrainingParticipantId().getTrainingCode());
+			FeedbackMaster getProvidedFeedback = manager.find(FeedbackMaster.class,program.getTrainingParticipantId());
 			providedFeedback.add(getProvidedFeedback);
 		}
 	
