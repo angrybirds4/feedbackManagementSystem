@@ -6,10 +6,13 @@ import com.cg.fbms.dto.CourseMaster;
 
 public interface ICourseMaintainence {
 	public boolean addCourse(CourseMaster cmaster);
-	public boolean changeCourseName(int courseId ,String courseName);
-	
-	public boolean changeCourseDuration(int courseId, int courseDays );
+
+	public boolean changeCourseName(int courseId, String courseName);
+
+	public boolean changeCourseDuration(int courseId, int courseDays);
+
 	public CourseMaster getCourseById(int courseId);
+
 	public ArrayList<CourseMaster> getAllCourse();
 
 }

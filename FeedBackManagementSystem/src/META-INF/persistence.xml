@@ -5,7 +5,8 @@
                       http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0">
 
-	<persistence-unit name="employee_fbms" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="employee_fbms"
+		transaction-type="RESOURCE_LOCAL">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.cg.fbms.dto.Employee</class>
@@ -14,18 +15,21 @@
 		<class>com.cg.fbms.dto.FeedbackMaster</class>
 		<class>com.cg.fbms.dto.TrainingParticipantEnrollment</class>
 		<class>com.cg.fbms.dto.TrainingProgram</class>
-		
+
 		<properties>
 
 			<!-- jdbc properties -->
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/fbms_db" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/fbms_db" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<!-- jdbc properties -->
 
 			<!-- hibernate properties -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<!-- hibernate properties -->
@@ -33,5 +37,5 @@
 		</properties>
 
 	</persistence-unit>
-	
+
 </persistence>

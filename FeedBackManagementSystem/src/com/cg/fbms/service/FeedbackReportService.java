@@ -34,7 +34,5 @@ public class FeedbackReportService implements IFeedbackReport {
 		List<TrainingParticipantEnrollment> fbPendingParticipants = feedbackReportDAO.getFbPendingParticipants();
 		return fbPendingParticipants;
 	}
-	
-	
 
 }

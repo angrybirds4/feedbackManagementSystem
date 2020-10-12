@@ -18,42 +18,39 @@ import com.cg.fbms.service.TrainingCoordinatorService;
 
 @WebServlet("/AddTrainingSessionController")
 public class AddTrainingSessionController extends HttpServlet {
-	
 
-		@Override
-		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-			
-			
-			ITrainingCoordinatorService service = new TrainingCoordinatorService();
-			
-			
-			Integer courseId = Integer.parseInt(request.getParameter("courseId"));
-			Integer facultyId = Integer.parseInt(request.getParameter("facultyId"));
-			Date startDate = null;
-			try {
-				startDate = new SimpleDateFormat("yyy-MM-dd").parse(request.getParameter("startDate"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			Date endDate = null;
-			try {
-				endDate = new SimpleDateFormat("yyy-MM-dd").parse(request.getParameter("endDate"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		    TrainingProgram TrainingP = new TrainingProgram(courseId,facultyId,startDate,endDate);
-		    
-		    boolean trainingsession = service.addTrainingSession(TrainingP);
-			
-		/*	AddTrainingSessionDAO dao = new AddTrainingSessionDAO();
-			if(dao.insertData(TrainingP))System.out.println("New Training Course added!");
-			else System.out.println("Fix yo error"); */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ITrainingCoordinatorService addTraining = new TrainingCoordinatorService();
+
+		int courseId = Integer.parseInt(request.getParameter("courseId"));
+		int facultyId = Integer.parseInt(request.getParameter("facultyId"));
+		Date startDate = null;
+		try {
+			startDate = new SimpleDateFormat("yyy-MM-dd").parse(request.getParameter("startDate"));
+		} catch (ParseException parseExp) {
+			// TODO Auto-generated catch block
+			parseExp.printStackTrace();
 		}
+
+		Date endDate = null;
+		try {
+			endDate = new SimpleDateFormat("yyy-MM-dd").parse(request.getParameter("endDate"));
+		} catch (ParseException parseExp) {
+
+			parseExp.printStackTrace();
+		}
+
+		TrainingProgram trainingProgram = new TrainingProgram(courseId, facultyId, startDate, endDate);
+
+		boolean trainingSession = addTraining.addTrainingSession(trainingProgram);
+
+		/*
+		 * AddTrainingSessionDAO dao = new AddTrainingSessionDAO();
+		 * if(dao.insertData(TrainingP))System.out.println("New Training Course added!"
+		 * ); else System.out.println("Fix yo error");
+		 */
 	}
-
-
+}

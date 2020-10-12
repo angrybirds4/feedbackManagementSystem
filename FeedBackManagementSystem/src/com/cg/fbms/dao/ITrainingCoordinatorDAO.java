@@ -6,8 +6,6 @@ import com.cg.fbms.dto.Faculty;
 import com.cg.fbms.dto.TrainingProgram;
 
 public interface ITrainingCoordinatorDAO {
-	public boolean addTrainingCourse(TrainingProgram TrainingP);
+	public boolean addTrainingCourse(TrainingProgram trainingProgram);
 
 }
-
-

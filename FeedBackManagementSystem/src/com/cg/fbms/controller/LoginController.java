@@ -16,59 +16,56 @@ import com.cg.fbms.dto.Employee;
 @WebServlet("/LoginServlet")
 public class LoginController extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		ILoginDAO loginDAO = new LoginDAOImpl();
-		
-		int employeeId =  Integer.parseInt(request.getParameter("username"));
+
+		int employeeId = Integer.parseInt(request.getParameter("username"));
 		String employeePassword = request.getParameter("password");
-		
-		Employee employeeCredentials = new Employee(employeeId,employeePassword);
-		
+
+		Employee employeeCredentials = new Employee(employeeId, employeePassword);
+
 		try {
-			
+
 			boolean isValidEmployee = loginDAO.validateEmployee(employeeCredentials);
-			
+
 			System.out.println("Enter employee id : " + employeeId);
-			System.out.println("Enter employee password : "+employeePassword);
-			
+			System.out.println("Enter employee password : " + employeePassword);
+
 			String role = loginDAO.getEmployeeRole();
-			System.out.println("Role of Employee is : "+role);
-			
-			if(isValidEmployee)
-			{
-				switch(role)
-				{
-				case "Participant" :
-								response.sendRedirect("ParticpantHomePage.jsp");
-								break;
-								
-				case "Admin" : request.getRequestDispatcher("adminHomePage.jsp").forward(request, response);;
-				                break;
-				                
-				default :
-								response.sendRedirect("coordinatorHomePage.jsp");
-				                break;
+			System.out.println("Role of Employee is : " + role);
+
+			if (isValidEmployee) {
+				switch (role) {
+				case "Participant":
+					response.sendRedirect("ParticpantHomePage.jsp");
+					break;
+
+				case "Admin":
+					request.getRequestDispatcher("adminHomePage.jsp").forward(request, response);
+					;
+					break;
+
+				default:
+					response.sendRedirect("coordinatorHomePage.jsp");
+					break;
 				}
 			}
-			
+
 			else {
-				/*request.setAttribute("ErrorMsg", "User Name or Password is Invalid!");
-				request.getRequestDispatcher("welcome.jsp").forward(request, response);*/
+				/*
+				 * request.setAttribute("ErrorMsg", "User Name or Password is Invalid!");
+				 * request.getRequestDispatcher("welcome.jsp").forward(request, response);
+				 */
 				response.sendRedirect("welcome.jsp");
 			}
-		}
-		catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {
+
 			request.setAttribute("ErrorMsg", "Sorry can't connect to database.");
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
-		
-		
-		
-		
-		
+
 	}
 
 }

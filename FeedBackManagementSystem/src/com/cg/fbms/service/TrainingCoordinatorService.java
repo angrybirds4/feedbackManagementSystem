@@ -12,7 +12,7 @@ public class TrainingCoordinatorService implements ITrainingCoordinatorService{
 	
 	@Override
 	public boolean addTrainingSession(TrainingProgram trainingProgram) {
-		// TODO Auto-generated method stub
+		
 		return corodinatorDAO.addTrainingCourse(trainingProgram);
 		
 	}

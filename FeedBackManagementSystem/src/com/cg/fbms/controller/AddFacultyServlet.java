@@ -14,39 +14,36 @@ import com.cg.fbms.service.FacultymaintenanceService;
 import com.cg.fbms.service.IFacutlyMaintenance;
 
 @WebServlet("/AddFacultyServlet")
-public class AddFacultyServlet extends HttpServlet{
+public class AddFacultyServlet extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		RequestDispatcher dispatcher = null;
-		
-		
+
 		String facultyName = request.getParameter("facultyName");
 		String facultySkillSet = request.getParameter("facultySkillSet");
-		System.out.println(facultyName + " "+ facultySkillSet);
+		System.out.println(facultyName + " " + facultySkillSet);
 		IFacutlyMaintenance facultyMaintenance = new FacultymaintenanceService();
-		
-		
+
 		try {
-			boolean addingStatus = facultyMaintenance.addFaculty(new Faculty(facultyName,facultySkillSet));
-			if(addingStatus) {
+			boolean addingStatus = facultyMaintenance.addFaculty(new Faculty(facultyName, facultySkillSet));
+			if (addingStatus) {
 				request.setAttribute("successMessage", "Faculty added successfully");
 				dispatcher = request.getRequestDispatcher("adminHomePage.jsp");
 				dispatcher.forward(request, response);
-			}
-			else {
+			} else {
 				request.setAttribute("errorMessage", "Some error occurred, please verify all details");
 				dispatcher = request.getRequestDispatcher("addFaculty.jsp");
 				dispatcher.forward(request, response);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 			request.setAttribute("error", "Sorry can't connect to databse");
 			dispatcher = request.getRequestDispatcher("errorPage.jsp");
 			dispatcher.include(request, response);
 		}
-		
+
 	}
 }
